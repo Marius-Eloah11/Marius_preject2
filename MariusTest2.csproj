@@ -1,16 +1,40 @@
-<Project Sdk="Microsoft.NET.Sdk">
+using System;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+namespace MariusTest2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            IWebDriver driver = new ChromeDriver("C:\\Users\\Talja\\Downloads\\chromedriver_win32\\");
 
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
-    <PackageReference Include="Selenium.Support" Version="4.5.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.5.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="106.0.5249.6100" />
-  </ItemGroup>
+            driver.Navigate().GoToUrl("http://automationpractice.com/index.php");
 
-</Project>
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+
+            //Searches for the Login or sign in button and cliscks it
+            IWebElement loginElement = driver.FindElement(By.ClassName("login"));
+            loginElement.Click();
+
+            //selects email text box, clears and allows text to be entered
+            IWebElement emailElement = driver.FindElement(By.Id("email_create"));
+            emailElement.Clear();
+            emailElement.SendKeys("mariusbarca11@gmail.com");
+
+            //submit button clicked on
+            IWebElement submitElement = driver.FindElement(By.Id("SubmitCreate"));
+            submitElement.Click();
+
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+
+            IWebElement regElement = driver.FindElement(By.Id("submitAccount"));
+            regElement.Click();
+
+
+
+        }
+    }
+}
